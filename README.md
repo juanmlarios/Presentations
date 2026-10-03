@@ -39,6 +39,7 @@ These limits are guidelines, not enforced restrictions. Split dense content acro
 
 - **Footer:** open **View → Slide Master**, select the top master, and edit the text box named **EDIT HERE: presentation footer**. This updates all content slides. The cover intentionally has no footer.
 - **Colours and fonts:** use PowerPoint's theme colour/font controls, or the controls on the **Slide Master** tab. The template uses Georgia for both heading and body theme fonts. Keep Georgia installed for the intended appearance.
+- **Bullets:** filled square bullets match the approved reference: teal on light backgrounds, white on dark teal panels. The symbol uses Arial at 70% of the text size; the surrounding text retains Georgia.
 - **Slide numbers:** the bottom-right number is a dynamic field on the master, not typed text. It updates as slides are inserted, removed, or reordered. The cover is counted but does not display a number. Do not replace the field with plain text.
 - **Layout artwork:** select the relevant child layout in Slide Master view to edit its cards, panels, and other decorations.
 

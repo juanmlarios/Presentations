@@ -180,13 +180,26 @@ def theme_refs(root):
         font.set("typeface", "+mn-lt")
         for attr in ["panose", "pitchFamily", "charset"]:
             font.attrib.pop(attr, None)
-    # A real Unicode square avoids Wingdings substitution on other platforms.
+    # Filled squares at the approved reference's scale; explicit colour keeps
+    # bullets teal on light backgrounds and white on the dark comparison panel.
     for bullet in root.findall(".//a:buChar", NS):
-        bullet.set("char", "▪")
-    for font in root.findall(".//a:buFont", NS):
-        font.set("typeface", "Georgia")
-        font.attrib.pop("charset", None)
-        font.attrib.pop("pitchFamily", None)
+        prop = bullet.getparent()
+        bullet.set("char", "■")
+        for child in list(prop):
+            if ET.QName(child).localname in ["buClrTx", "buClr", "buSzTx", "buSzPct", "buSzPts", "buFontTx", "buFont"]:
+                prop.remove(child)
+        text_colour = prop.find("a:defRPr/a:solidFill/a:schemeClr", NS)
+        colour = "lt1" if text_colour is not None and text_colour.get("val") in ["lt1", "bg1"] else "accent1"
+        bullet_colour = ET.Element(q("a", "buClrTx" if colour == "lt1" else "buClr"))
+        if colour != "lt1":
+            ET.SubElement(bullet_colour, q("a", "schemeClr"), val=colour)
+        position = list(prop).index(bullet)
+        for offset, node in enumerate([
+            bullet_colour,
+            ET.Element(q("a", "buSzPct"), val="70000"),
+            ET.Element(q("a", "buFont"), typeface="Arial"),
+        ]):
+            prop.insert(position + offset, node)
 
 
 def placeholder(shape, index, kind, name):
@@ -391,6 +404,17 @@ def validate(path):
         for name in archive.namelist():
             if name.endswith((".xml", ".rels")):
                 root = ET.fromstring(archive.read(name))
+                for bullet in root.findall(".//a:buChar", NS):
+                    prop = bullet.getparent()
+                    assert bullet.get("char") == "■", name
+                    assert prop.find("a:buFont", NS).get("typeface") == "Arial", name
+                    assert prop.find("a:buSzPct", NS).get("val") == "70000", name
+                    text_colour = prop.find("a:defRPr/a:solidFill/a:schemeClr", NS)
+                    expected = "lt1" if text_colour is not None and text_colour.get("val") in ["lt1", "bg1"] else "accent1"
+                    if expected == "lt1":
+                        assert prop.find("a:buClrTx", NS) is not None, name
+                    else:
+                        assert prop.find("a:buClr/a:schemeClr", NS).get("val") == expected, name
                 if name.endswith(".rels"):
                     base = "" if name == "_rels/.rels" else posixpath.dirname(posixpath.dirname(name))
                     for rel in root:
