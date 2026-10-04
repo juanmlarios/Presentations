@@ -1,0 +1,41 @@
+{
+  "title": "From ideas to a clear presentation",
+  "presenter": "Example presenter",
+  "footer": "Presentation Workshop • Example only",
+  "slides": [
+    {
+      "layout": "01 Cover",
+      "fields": {
+        "Presentation type": "WORKSHOP EXAMPLE",
+        "Presentation title": "From ideas to a\nclear presentation",
+        "Subtitle": "Agree the story before building the slides",
+        "Presenter": "Example presenter"
+      },
+      "notes": "This manifest demonstrates the content format. Replace it with the presenter's approved wording.",
+      "duration_minutes": 0.5
+    },
+    {
+      "layout": "02 Introduction + Bullets",
+      "fields": {
+        "Section label": "START WITH THE AUDIENCE",
+        "Slide title": "A clear brief gives the talk direction",
+        "Lead statement": "Decide what the audience should understand or do differently after the session.",
+        "Main points": "Identify the audience and their starting point.\nChoose one central message.\nAgree the time available and the intended outcome."
+      },
+      "notes": "Ask the presenter which outcome matters most. Keep the discussion focused on the audience, not on slide count.",
+      "sources": [],
+      "duration_minutes": 2
+    },
+    {
+      "layout": "09 Bullet List + Takeaway",
+      "fields": {
+        "Section label": "NEXT STEPS",
+        "Slide title": "Turn the accepted story into an editable deck",
+        "Main points": "Organise a sequence with a clear beginning and ending.\nRefine the wording and speaker notes together.\nApprove the content, then build and visually check the slides.",
+        "Takeaway": "The template supports the message; it does not decide the message."
+      },
+      "notes": "Close with the next decision or action. Allow time for the audience's questions.",
+      "duration_minutes": 1.5
+    }
+  ]
+}

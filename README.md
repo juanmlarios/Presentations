@@ -50,3 +50,31 @@ Layout changes between substantially different designs can require moving or re-
 Run `python3 build_template.py` with `python-pptx` and `lxml` installed. This recreates both PowerPoint deliverables from the original source and runs assertions for ZIP/XML integrity, internal relationships, layout/placeholder counts, shape boundaries, and inserting/saving/reopening new slides from every layout. It does not overwrite the source deck or rebuild the PDF preview.
 
 Both deliverables were exported successfully with LibreOffice. All 10 example layouts and all 10 newly inserted, populated layouts were visually inspected. Direct Microsoft PowerPoint UI validation is still recommended before broad distribution; LibreOffice rendering is not a substitute for testing PowerPoint's layout picker and Reset command.
+
+## Interactive presentation workshop (local Pi skill)
+
+The project-local skill is [`.pi/skills/presentation-workshop/SKILL.md`](.pi/skills/presentation-workshop/SKILL.md). It is not installed globally.
+
+In Pi, run `/reload`, then:
+
+```text
+/skill:presentation-workshop
+```
+
+You can add a topic or a path to your notes after the command. The skill interviews the presenter one question at a time, agrees a story, refines slides in small batches, and builds only after the content is approved. It keeps the working plan and accepted content under `presentations/<slug>/` and uses the actual POTX rather than recreating its design.
+
+The bundled builder adds editable text, speaker notes, references, and a custom footer. It retains all ten layouts and the approved square bullets. Existing output files are never overwritten; use versioned filenames for revisions. Visual review remains a separate required step.
+
+```bash
+# Inspect actual template fields.
+python3 .pi/skills/presentation-workshop/scripts/build_presentation.py --layouts
+
+# Build accepted content (replace these paths with your workshop files).
+python3 .pi/skills/presentation-workshop/scripts/build_presentation.py \
+  presentations/my-talk/content.json presentations/my-talk/my-talk-v1.pptx
+
+# Run the builder's regression checks.
+python3 .pi/skills/presentation-workshop/scripts/test_build_presentation.py
+```
+
+A valid small manifest is provided at [`.pi/skills/presentation-workshop/references/example-content.json`](.pi/skills/presentation-workshop/references/example-content.json).
